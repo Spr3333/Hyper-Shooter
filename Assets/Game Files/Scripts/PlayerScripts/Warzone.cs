@@ -13,16 +13,22 @@ public class Warzone : MonoBehaviour
     [SerializeField] private string animationName;
     [SerializeField] private float animationSpeed;
     [SerializeField] private Transform ikTarget;
+    [SerializeField] private SplineAnimate ikSpline;
     // Start is called before the first frame update
     void Start()
     {
-        
+        ikSpline.Duration = WarzoneDuration;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void PlayIKSplineAnimate()
+    {
+        ikSpline.Play();
     }
 
     public Spline GetSpline()

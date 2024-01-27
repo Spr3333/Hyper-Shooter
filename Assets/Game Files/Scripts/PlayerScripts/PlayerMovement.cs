@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
 
-[RequireComponent(typeof(PlayerIK), typeof(PlayerAnim))]
+[RequireComponent(typeof(CharacterIK), typeof(PlayerAnim))]
 public class PlayerMovement : MonoBehaviour
 {
     public enum State
@@ -18,15 +19,21 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAnim anim;
     private State state;
     private Warzone currentWarzone;
-    private PlayerIK playerIK;
+    private CharacterIK playerIK;
+    [SerializeField] private Transform enemyTarget;
 
 
     [Header("Spline Settings")]
     private float warzoneTimer;
+
+
+    [Header("Events")]
+    public static Action OnEnterdWarzone;
+    public static Action OnExitWarzone;
     // Start is called before the first frame update
     void Start()
     {
-        playerIK = GetComponent<PlayerIK>();
+        playerIK = GetComponent<CharacterIK>();
         Application.targetFrameRate = 60;
         anim = GetComponent<PlayerAnim>();
         state = State.Idle;
@@ -78,13 +85,17 @@ public class PlayerMovement : MonoBehaviour
         state = State.Warzone;
         currentWarzone = warzone;
 
+        currentWarzone.PlayIKSplineAnimate();
         warzoneTimer = 0;
 
         anim.Play(currentWarzone.GetAnimationName(), currentWarzone.GetAnimationSpeed());
 
-        Time.timeScale = 0.3f;
+        Time.timeScale = 0.2f;
+        Time.fixedDeltaTime = 0.2f / 50;
 
         playerIK.ConfigureIK(currentWarzone.GetTarget());
+
+        OnEnterdWarzone?.Invoke();
 
         //Debug.Log("Entered Warzone");
     }
@@ -105,8 +116,15 @@ public class PlayerMovement : MonoBehaviour
     {
         state = State.Running;
         Time.timeScale = 1;
+        Time.fixedDeltaTime = 1f / 50;
         anim.PlayRunAnimation();
         currentWarzone = null;
         playerIK.DisableIK();
+        OnExitWarzone?.Invoke();
+    }
+
+    public Transform GetEnemyTarget()
+    {
+        return enemyTarget;
     }
 }
