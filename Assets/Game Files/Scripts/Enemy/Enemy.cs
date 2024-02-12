@@ -6,8 +6,8 @@ public class Enemy : MonoBehaviour
 {
     enum State
     {
-       Alive,
-       Dead
+        Alive,
+        Dead
     }
 
     private State state;
@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     private CharacterRagdoll characterRagdoll;
     private PlayerMovement playerMovement;
     [SerializeField] private CharacterIK characterIK;
+    [SerializeField] private EnemyShooter shooter;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +29,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void TakeDamage()
@@ -43,5 +44,14 @@ public class Enemy : MonoBehaviour
     {
         state = State.Dead;
         characterRagdoll.EnableRagdoll();
+    }
+
+    
+
+    public void ShootAtPlayer()
+    {
+        if (state == State.Dead)
+            return;
+        shooter.TryShooting();
     }
 }

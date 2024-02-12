@@ -11,26 +11,40 @@ public class PlayerMovement : MonoBehaviour
     {
         Idle,
         Running,
-        Warzone
+        Warzone,
+        Dead
     }
 
     [Header("Elements")]
-    [SerializeField] private float moveSpeed = 10;
     private PlayerAnim anim;
     private State state;
     private Warzone currentWarzone;
     private CharacterIK playerIK;
     [SerializeField] private Transform enemyTarget;
+    [SerializeField] private CharacterRagdoll characterRagdoll;
 
 
     [Header("Spline Settings")]
     private float warzoneTimer;
+    [SerializeField] private float moveSpeed = 10;
+    private bool isDead;
 
 
     [Header("Events")]
     public static Action OnEnterdWarzone;
     public static Action OnExitWarzone;
-    // Start is called before the first frame update
+    public static Action IsDead;
+
+    private void Awake()
+    {
+        GameManager.OnGameStateChanged += GameStateChangedCallback;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameStateChanged -= GameStateChangedCallback;
+    }
+
     void Start()
     {
         playerIK = GetComponent<CharacterIK>();
@@ -43,11 +57,21 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartRunning();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    StartRunning();
+        //}
         ManageState();
+    }
+
+    private void GameStateChangedCallback(GameState state)
+    {
+        switch(state)
+        {
+            case GameState.Game:
+                StartRunning();
+                break;
+        }
     }
 
     private void ManageState()
@@ -62,6 +86,9 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case State.Warzone:
                 ManageWarzoneState();
+                break;
+            case State.Dead:
+                isDead = true;
                 break;
         }
     }
@@ -90,8 +117,8 @@ public class PlayerMovement : MonoBehaviour
 
         anim.Play(currentWarzone.GetAnimationName(), currentWarzone.GetAnimationSpeed());
 
-        Time.timeScale = 0.2f;
-        Time.fixedDeltaTime = 0.2f / 50;
+        Time.timeScale = 0.3f;
+        Time.fixedDeltaTime = 0.3f / 50;
 
         playerIK.ConfigureIK(currentWarzone.GetTarget());
 
@@ -126,5 +153,16 @@ public class PlayerMovement : MonoBehaviour
     public Transform GetEnemyTarget()
     {
         return enemyTarget;
+    }
+
+    public void TakeDamage()
+    {
+        state = State.Dead;
+        characterRagdoll.EnableRagdoll();
+
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 1f / 50;
+
+        IsDead?.Invoke();
     }
 }

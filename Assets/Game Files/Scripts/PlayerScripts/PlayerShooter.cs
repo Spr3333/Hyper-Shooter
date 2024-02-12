@@ -20,11 +20,15 @@ public class PlayerShooter : MonoBehaviour
     {
         PlayerMovement.OnEnterdWarzone += EnteredWarzoneCallBack;
         PlayerMovement.OnExitWarzone += ExitWarzoneCallBack;
+        PlayerMovement.IsDead += PlayerDeadCallBack;
     }
 
     private void OnDestroy()
     {
         PlayerMovement.OnEnterdWarzone -= EnteredWarzoneCallBack;
+        PlayerMovement.OnExitWarzone -= ExitWarzoneCallBack;
+        PlayerMovement.IsDead -= PlayerDeadCallBack;
+
     }
 
     // Start is called before the first frame update
@@ -64,6 +68,12 @@ public class PlayerShooter : MonoBehaviour
     {
         SetShootingline(false);
         canShoot = false;
+    }
+
+    private void PlayerDeadCallBack()
+    {
+        SetShootingline(false);
+        canShoot= false;
     }
 
 
