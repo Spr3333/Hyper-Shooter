@@ -164,5 +164,6 @@ public class PlayerMovement : MonoBehaviour
         Time.fixedDeltaTime = 1f / 50;
 
         IsDead?.Invoke();
+        GameManager.instance.SetGameState(GameState.GameOver);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -50,6 +51,7 @@ public class UIManager : MonoBehaviour
                 gameOverPanel.SetActive(false);
                 break;
             case GameState.GameOver:
+                menuPanel.SetActive(false);
                 levelCompletedPanel.SetActive(false);
                 gameOverPanel.SetActive(true);
                 break;
@@ -59,5 +61,10 @@ public class UIManager : MonoBehaviour
     public void PlayButtonCallback()
     {
         GameManager.instance.SetGameState(GameState.Game);
+    }
+
+    public void RetryButtonCallback()
+    {
+        SceneManager.LoadScene(0);
     }
 }
