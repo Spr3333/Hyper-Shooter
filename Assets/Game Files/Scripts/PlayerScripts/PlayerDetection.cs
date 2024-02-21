@@ -21,18 +21,23 @@ public class PlayerDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DetectStuff();
+        if (GameManager.instance.IsGameState())
+            DetectStuff();
     }
 
     private void DetectStuff()
     {
         Collider[] detectedObjects = Physics.OverlapSphere(transform.position, detectionRange);
 
-        foreach(Collider collider in detectedObjects)
+        foreach (Collider collider in detectedObjects)
         {
-            if(collider.CompareTag("Warzone"))
+            if (collider.CompareTag("Warzone"))
             {
                 EnterTriggerCallBack(collider);
+            }
+            if (collider.CompareTag("FinishLine"))
+            {
+                FinishLineHitCallback();
             }
         }
     }
@@ -48,5 +53,11 @@ public class PlayerDetection : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+
+    private void FinishLineHitCallback()
+    {
+        Debug.Log("Finish Line");
+        playerMovement.FinishLevelCallBack();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,9 @@ public class PlayerShooter : MonoBehaviour
 
     [Header("Settings")]
     private bool canShoot;
+
+    [Header("Actions")]
+    public static Action OnShot;
 
     private void Awake()
     {
@@ -56,6 +60,8 @@ public class PlayerShooter : MonoBehaviour
         direction.z = 0;
         Bullet bulletInstance = Instantiate(bulletPrefab, bulletSpawnPosition.position, Quaternion.identity, bulletParent);
         bulletInstance.GetVelocity(direction * bulletSpeed);
+
+        OnShot?.Invoke();
     }
 
     private void EnteredWarzoneCallBack()

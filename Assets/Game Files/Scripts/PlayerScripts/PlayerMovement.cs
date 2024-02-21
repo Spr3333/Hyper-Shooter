@@ -61,12 +61,13 @@ public class PlayerMovement : MonoBehaviour
         //{
         //    StartRunning();
         //}
-        ManageState();
+        if (GameManager.instance.IsGameState())
+            ManageState();
     }
 
     private void GameStateChangedCallback(GameState state)
     {
-        switch(state)
+        switch (state)
         {
             case GameState.Game:
                 StartRunning();
@@ -133,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
 
         float splinePercent = warzoneTimer / currentWarzone.GetDuration();
         transform.position = currentWarzone.GetSpline().EvaluatePosition(splinePercent);
-        if(splinePercent >= 1)
+        if (splinePercent >= 1)
         {
             ExitWarzone();
         }
@@ -165,5 +166,13 @@ public class PlayerMovement : MonoBehaviour
 
         IsDead?.Invoke();
         GameManager.instance.SetGameState(GameState.GameOver);
+    }
+
+    public void FinishLevelCallBack()
+    {
+        state = State.Idle;
+        anim.Play("Idle");
+
+        GameManager.instance.SetGameState(GameState.LevelComplete);
     }
 }

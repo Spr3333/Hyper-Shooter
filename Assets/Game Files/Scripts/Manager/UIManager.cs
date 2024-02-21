@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject levelCompletedPanel;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gamePanel;
     // Start is called before the first frame update
 
     private void Awake()
@@ -42,18 +43,22 @@ public class UIManager : MonoBehaviour
                 menuPanel.SetActive(true);
                 levelCompletedPanel.SetActive(false);
                 gameOverPanel.SetActive(false);
+                gamePanel.SetActive(false);
                 break;
             case GameState.Game:
                 menuPanel.SetActive(false);
+                gamePanel.SetActive(true);
                 break;
             case GameState.LevelComplete:
                 levelCompletedPanel.SetActive(true);
                 gameOverPanel.SetActive(false);
+                gamePanel.SetActive(false);
                 break;
             case GameState.GameOver:
                 menuPanel.SetActive(false);
                 levelCompletedPanel.SetActive(false);
                 gameOverPanel.SetActive(true);
+                gamePanel.SetActive(false);
                 break;
         }
     }
@@ -64,6 +69,11 @@ public class UIManager : MonoBehaviour
     }
 
     public void RetryButtonCallback()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void NextLevelCallback()
     {
         SceneManager.LoadScene(0);
     }
