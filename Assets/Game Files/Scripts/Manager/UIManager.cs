@@ -10,6 +10,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject levelCompletedPanel;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject pauseMenuPanel;
+    [SerializeField] private GameObject settingsPanel;
+
+
     // Start is called before the first frame update
 
     private void Awake()
