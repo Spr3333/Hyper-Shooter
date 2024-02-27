@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         Application.targetFrameRate = 60;
         anim = GetComponent<PlayerAnim>();
         state = State.Idle;
+        transform.position = CheckpointManager.instance.GetLastCheckpointPos();
 
     }
 
@@ -132,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
     {
         warzoneTimer += Time.deltaTime;
 
-        float splinePercent = warzoneTimer / currentWarzone.GetDuration();
+        float splinePercent = Mathf.Clamp01(warzoneTimer / currentWarzone.GetDuration());
         transform.position = currentWarzone.GetSpline().EvaluatePosition(splinePercent);
         if (splinePercent >= 1)
         {

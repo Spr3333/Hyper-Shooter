@@ -16,6 +16,8 @@ public class PlayerShooter : MonoBehaviour
 
     [Header("Settings")]
     private bool canShoot;
+    [SerializeField] private float firerate = 0.5f;
+    private float canFire;
 
     [Header("Actions")]
     public static Action OnShot;
@@ -50,8 +52,14 @@ public class PlayerShooter : MonoBehaviour
 
     private void ManageShooting()
     {
-        if (Input.GetMouseButtonDown(0))
-            Shoot();
+        if (Input.GetMouseButtonDown(0) && BulletUIManager.instance.CanShoot() && Time.time >canFire)
+            ShootBullet();
+    }
+
+    private void ShootBullet()
+    {
+        canFire = firerate + Time.time;
+        Shoot();
     }
 
     private void Shoot()

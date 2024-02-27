@@ -54,4 +54,9 @@ public class Enemy : MonoBehaviour
             return;
         shooter.TryShooting();
     }
+
+    public bool IsDead()
+    {
+        return state == State.Dead;
+    }
 }

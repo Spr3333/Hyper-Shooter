@@ -39,6 +39,10 @@ public class PlayerDetection : MonoBehaviour
             {
                 FinishLineHitCallback();
             }
+            if(collider.TryGetComponent(out CheckPoint checkPoint))
+            {
+                checkPoint.Interact();
+            }
         }
     }
 
