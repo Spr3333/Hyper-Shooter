@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
+using Dreamteck.Splines;
 
 public class Warzone : MonoBehaviour
 {
 
 
     [Header("Elements")]
-    [SerializeField] private SplineContainer playerSpline;
+    [SerializeField] private Transform ikTarget;
+    [SerializeField] private SplineComputer newPlayerSpline;
+    [SerializeField] private SplineFollower ikSplineFollower;
+
+    [Header("Settings")]
     [SerializeField] private float WarzoneDuration;
     [SerializeField] private string animationName;
     [SerializeField] private float animationSpeed;
-    [SerializeField] private Transform ikTarget;
-    [SerializeField] private SplineAnimate ikSpline;
     // Start is called before the first frame update
     void Start()
     {
-        ikSpline.Duration = WarzoneDuration;
+        ikSplineFollower.followDuration = WarzoneDuration;
     }
 
     // Update is called once per frame
@@ -28,12 +31,12 @@ public class Warzone : MonoBehaviour
 
     public void PlayIKSplineAnimate()
     {
-        ikSpline.Play();
+        ikSplineFollower.follow = true;
     }
 
-    public Spline GetSpline()
+    public SplineComputer GetSpline()
     {
-        return playerSpline.Spline;
+        return newPlayerSpline;
     }
 
     public float GetDuration()
