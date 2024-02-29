@@ -141,6 +141,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void TryExitWarzone()
+    {
+        Warzone nextWarzone = currentWarzone.GetNextWarzone();
+
+        if (nextWarzone == null)
+            ExitWarzone();
+        else
+        {
+            currentWarzone = null;
+            EnteredWarzoneCallback(nextWarzone);
+        }
+
+    }
+
     private void ExitWarzone()
     {
         state = State.Running;
@@ -175,5 +189,10 @@ public class PlayerMovement : MonoBehaviour
         anim.Play("Idle");
 
         GameManager.instance.SetGameState(GameState.LevelComplete);
+    }
+
+    public Warzone GetCurrentWarzone()
+    {
+        return currentWarzone;
     }
 }

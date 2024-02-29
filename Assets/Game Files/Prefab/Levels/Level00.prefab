@@ -916,6 +916,7 @@ MonoBehaviour:
   WarzoneDuration: 1
   animationName: Flip
   animationSpeed: 1
+  nextWarzone: {fileID: 0}
 --- !u!1 &1024830196894044475
 GameObject:
   m_ObjectHideFlags: 0
@@ -6516,6 +6517,7 @@ MonoBehaviour:
   WarzoneDuration: 2
   animationName: Flip
   animationSpeed: 0.5
+  nextWarzone: {fileID: 0}
 --- !u!1 &5551012625099791515
 GameObject:
   m_ObjectHideFlags: 0

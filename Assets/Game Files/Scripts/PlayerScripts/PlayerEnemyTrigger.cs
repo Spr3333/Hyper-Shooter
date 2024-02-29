@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerEnemyTrigger : MonoBehaviour
 {
     [Header("Elements")]
     [SerializeField] private LineRenderer shootingLine;
+    private PlayerMovement playerMovement;
 
     [Header("Settings")]
     [SerializeField] private LayerMask enemyMask;
@@ -16,6 +18,8 @@ public class PlayerEnemyTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        playerMovement = GetComponent<PlayerMovement>();
+
         PlayerMovement.OnEnterdWarzone += EnteredWarzoneCallBack;
         PlayerMovement.OnExitWarzone += ExitWArzoneCallBack;
     }
@@ -77,7 +81,8 @@ public class PlayerEnemyTrigger : MonoBehaviour
 
             if (!enemyFound)
             {
-                enemy.ShootAtPlayer();
+                if (enemy.transform.parent == playerMovement.GetCurrentWarzone().transform)
+                    enemy.ShootAtPlayer();
                 enemyRemoved.Add(enemy);
             }
         }

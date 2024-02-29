@@ -12,10 +12,15 @@ public class LevelManager : MonoBehaviour
     [Header("Settings")]
     private int levelIndex;
 
+
+    [Header("Debug")]
+    [SerializeField] private bool PreventLevelSpawn;
+
     private void Awake()
     {
         LoadData();
-        SpawnLevel();
+        if (!PreventLevelSpawn)
+            SpawnLevel();
         GameManager.OnGameStateChanged += GameStateChangeCallback;
     }
 
@@ -27,13 +32,13 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void GameStateChangeCallback(GameState state)
@@ -49,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnLevel()
     {
-        if(levelIndex >= levels.Length)
+        if (levelIndex >= levels.Length)
             levelIndex = 0;
 
         GameObject levelInstance = Instantiate(levels[levelIndex], transform);

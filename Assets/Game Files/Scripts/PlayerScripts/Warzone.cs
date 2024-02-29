@@ -17,6 +17,7 @@ public class Warzone : MonoBehaviour
     [SerializeField] private float WarzoneDuration;
     [SerializeField] private string animationName;
     [SerializeField] private float animationSpeed;
+    [SerializeField] private Warzone nextWarzone;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,5 +58,10 @@ public class Warzone : MonoBehaviour
     public Transform GetTarget()
     {
         return ikTarget;
+    }
+
+    public Warzone GetNextWarzone()
+    {
+        return nextWarzone;
     }
 }
