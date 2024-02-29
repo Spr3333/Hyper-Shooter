@@ -22,6 +22,11 @@ public class PlayerShooter : MonoBehaviour
     [Header("Actions")]
     public static Action OnShot;
 
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip fireClip;
+    private AudioSource audioSource;
+
     private void Awake()
     {
         PlayerMovement.OnEnterdWarzone += EnteredWarzoneCallBack;
@@ -41,6 +46,7 @@ public class PlayerShooter : MonoBehaviour
     void Start()
     {
         SetShootingline(false);
+        audioSource = FindAnyObjectByType<AudioSource>();
     }
 
     // Update is called once per frame
@@ -68,6 +74,7 @@ public class PlayerShooter : MonoBehaviour
         direction.z = 0;
         Bullet bulletInstance = Instantiate(bulletPrefab, bulletSpawnPosition.position, Quaternion.identity, bulletParent);
         bulletInstance.GetVelocity(direction * bulletSpeed);
+        audioSource.PlayOneShot(fireClip);
 
         OnShot?.Invoke();
     }

@@ -10,16 +10,23 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] private EnemyBullet bulletPrefab;
     [SerializeField] private Transform bulletParent;
     [SerializeField] private Transform bulletSpawnPoint;
+
     private Enemy enemy;
 
 
     [Header("Settings")]
     [SerializeField] private float bulletSpeed;
     private bool hasShot = false;
+
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip fireClip;
+    private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
+        audioSource = FindAnyObjectByType<AudioSource>();
     }
 
     // Update is called once per frame
@@ -46,5 +53,6 @@ public class EnemyShooter : MonoBehaviour
         velocity.z = 0;
         EnemyBullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity, bulletParent);
         bullet.ConfigureVelocity(velocity);
+        audioSource.PlayOneShot(fireClip);
     }
 }

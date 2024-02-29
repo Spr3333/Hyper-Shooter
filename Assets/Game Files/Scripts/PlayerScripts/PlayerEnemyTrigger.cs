@@ -58,7 +58,6 @@ public class PlayerEnemyTrigger : MonoBehaviour
 
         for (int i = 0; i < hits.Length; i++)
         {
-            Debug.Log(hits[i].collider.name);
             Enemy currentEnemy = hits[i].collider.GetComponent<Enemy>();
             if (!currentEnemies.Contains(currentEnemy))
                 currentEnemies.Add(currentEnemy);

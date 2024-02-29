@@ -155,6 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1782377668846117836}
   - component: {fileID: -209793023795600526}
+  - component: {fileID: -5108922411239144520}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -193,8 +194,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemiesMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   detectionRadius: 0.1
+  popUpImage: {fileID: 4727357134190828812, guid: 322071fc72096994d959d7b064dc411f,
+    type: 3}
+  hsClip: {fileID: 8300000, guid: 1cfbf9eef633ef04f97901f673c8ea47, type: 3}
+  hitClip: {fileID: 8300000, guid: 1866e41c759719a4c854b9ceed5374cb, type: 3}
+--- !u!135 &-5108922411239144520
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7199473147006712007}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05130005
+  m_Center: {x: -0.00014086068, y: 0, z: 0}
 --- !u!1 &8159148538368613117
 GameObject:
   m_ObjectHideFlags: 0

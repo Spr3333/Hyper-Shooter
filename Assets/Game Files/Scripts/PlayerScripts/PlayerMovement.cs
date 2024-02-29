@@ -35,6 +35,14 @@ public class PlayerMovement : MonoBehaviour
     public static Action OnExitWarzone;
     public static Action IsDead;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip ReloadClip;
+    [SerializeField] private AudioClip bgmClip;
+    [SerializeField] private AudioClip vacumClip;
+
+    private AudioSource audioSource;
+
+
     private void Awake()
     {
         GameManager.OnGameStateChanged += GameStateChangedCallback;
@@ -52,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<PlayerAnim>();
         state = State.Idle;
         transform.position = CheckpointManager.instance.GetLastCheckpointPos();
+        audioSource = FindAnyObjectByType<AudioSource>();
+
 
     }
 
@@ -125,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
         playerIK.ConfigureIK(currentWarzone.GetTarget());
 
         OnEnterdWarzone?.Invoke();
-
+        audioSource.PlayOneShot(vacumClip);
         //Debug.Log("Entered Warzone");
     }
 
@@ -164,6 +174,9 @@ public class PlayerMovement : MonoBehaviour
         currentWarzone = null;
         playerIK.DisableIK();
         OnExitWarzone?.Invoke();
+        //audioSource.clip = bgmClip; 
+        //audioSource.Play();
+        audioSource.PlayOneShot(ReloadClip);
     }
 
     public Transform GetEnemyTarget()

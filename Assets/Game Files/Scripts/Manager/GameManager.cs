@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { Menu, Game, LevelComplete, GameOver}
+public enum GameState { Menu, Game, LevelComplete, GameOver, Settings, Pause}
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;

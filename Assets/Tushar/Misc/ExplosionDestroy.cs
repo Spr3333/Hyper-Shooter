@@ -4,26 +4,29 @@ using UnityEngine;
 
 public class ExplosionDestroy : MonoBehaviour
 {
-    public AudioSource explosionClip;
+    public AudioSource audioSource;
     public float explosionForce = 10f;
     public float cameraShakeIntensity = 0.5f;
-    public GameObject particleSystemPrefab; // Assign your particle prefab in the Unity editor
+    public GameObject particleSystemPrefab;
+    [SerializeField] private LayerMask EnemyMask;
+    [SerializeField] private AudioClip explosionClip;
+    // Assign your particle prefab in the Unity editor
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            // Check if the left mouse button is clicked
-            HandleExplosion();
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    // Check if the left mouse button is clicked
+        //    HandleExplosion();
+        //}
     }
 
-    private void HandleExplosion()
+    public void HandleExplosion()
     {
         // Play explosion audio
-        if (explosionClip != null)
+        if (audioSource != null)
         {
-            explosionClip.PlayOneShot(explosionClip.clip);
+            audioSource.PlayOneShot(explosionClip);
         }
 
         // Instantiate particle system prefab at the barrel's position
@@ -33,17 +36,17 @@ public class ExplosionDestroy : MonoBehaviour
         }
 
         // Get all colliders within the explosion radius
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionForce);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionForce, EnemyMask);
 
         // Apply force to nearby objects with Rigidbody
         foreach (var collider in colliders)
         {
-            Rigidbody rb = collider.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionForce);
-                Debug.Log("Applied force to: " + collider.name);
-            }
+            //Rigidbody rb = collider.GetComponent<Rigidbody>();
+            //if (rb != null)
+            //{
+            //    //rb.AddExplosionForce(explosionForce, transform.position, explosionForce);
+            //}
+            collider.GetComponent<Enemy>().TakeDamage();
         }
 
         // Trigger camera shake (replace "MainCamera" with your actual camera tag or name)

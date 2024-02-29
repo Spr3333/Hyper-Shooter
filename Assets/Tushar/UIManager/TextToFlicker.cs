@@ -12,6 +12,10 @@ public class TextToFlicker : MonoBehaviour
     void Start()
     {
         // Start the flicker effect
+    }
+
+    private void Update()
+    {
         FlickerText();
     }
 
