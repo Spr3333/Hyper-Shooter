@@ -58,8 +58,21 @@ public class PlayerShooter : MonoBehaviour
 
     private void ManageShooting()
     {
-        if (Input.GetMouseButtonDown(0) && BulletUIManager.instance.CanShoot() && Time.time >canFire)
+        // For Android
+        //if (Input.touchCount > 0 && BulletUIManager.instance.CanShoot() && Time.time > canFire)
+        //{
+        //    Touch touch = Input.GetTouch(0);
+        //    if (touch.phase == TouchPhase.Began)
+        //    {
+        //        ShootBullet();
+        //    }
+        //}
+
+        //For Windows Input
+        if (Input.GetMouseButton(0) && BulletUIManager.instance.CanShoot() && Time.time > canFire)
+        {
             ShootBullet();
+        }
     }
 
     private void ShootBullet()
@@ -94,7 +107,7 @@ public class PlayerShooter : MonoBehaviour
     private void PlayerDeadCallBack()
     {
         SetShootingline(false);
-        canShoot= false;
+        canShoot = false;
     }
 
 
